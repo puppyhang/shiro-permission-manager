@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    <description>spring整合shiro的配置文件</description>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="loginUrl" value="/login"/>
+        <!--这个最好不用配置，登陆成功后会自动跳转到上一个请求的页面-->
+        <property name="successUrl" value="/"/>
+        <property name="securityManager" ref="defaultSecurityManager"/>
+        <property name="filters">
+            <util:map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </util:map>
+        </property>
+        <!--anon org.apache.shiro.web.filter.authc.AnonymousFilter-->
+        <!--authc org.apache.shiro.web.filter.authc.FormAuthenticationFilter-->
+        <!--user org.apache.shiro.web.filter.authc.UserFilter-->
+        <property name="filterChainDefinitions">
+            <value>
+                /=authc
+                /login=anon
+                /logout=logout
+                /**=user
+            </value>
+        </property>
+    </bean>
+
+    <!-- 基于Form表单的身份验证过滤器-->
+    <bean id="formAuthenticationFilter"
+          class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+        <property name="usernameParam" value="username"/>
+        <property name="passwordParam" value="password"/>
+        <property name="loginUrl" value="/login"/>
+    </bean>
+
+    <bean id="defaultSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="controlRealm"/>
+        <property name="rememberMeManager" ref="invalidRememberMeSessionManager"/>
+    </bean>
+
+    <bean id="controlRealm" class="com.ternence.permission.realm.SecurityAccessControlRealm"/>
+
+
+    <!--去除记住我的功能-->
+    <bean id="invalidRememberMeSessionManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <!--关闭浏览器就失效-->
+        <property name="maxAge" value="-1"/>
+    </bean>
+</beans>
