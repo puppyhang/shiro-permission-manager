@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="shiro-permission-manager:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="shiro-permission-manager.war">
-      <element id="artifact" artifact-name="shiro-permission-manager:war exploded" />
-    </root>
-  </artifact>
-</component>
