@@ -6,6 +6,13 @@
     <title>登录</title>
     <link href="/WEB-RES/plugins/bootstrap3/css/bootstrap.css" type="text/css" rel="stylesheet">
     <link href="/WEB-RES/plugins/layer3/theme/default/layer.css" type="text/css" rel="stylesheet">
+    <link href="/WEB-RES/plugins/icheck/skins/square/red.css" rel="stylesheet">
+    <style>
+        .panel {
+            border: 0px solid #1b6d85;
+        !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,7 +43,30 @@
                     </div>
                 </div>
 
-                <input class="btn btn-primary" type="submit" style="float: right" value="登录"/>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 control-label">验证码</label>
+                    <div class="col-sm-7">
+                        <input class="form-control" placeholder="请输入验证码" id="captcha"
+                               name="captcha" required>
+                    </div>
+                    <div class="col-sm-3 pull-left" style="padding: 0 !important;">
+                        <img src="/auth/captcha" alt="点击切换验证码"
+                             style="width: 100px; height: 35px;margin-left:10px"
+                             id="validateCodeImage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="pull-right" style="margin-right:15px">
+                        <label for="remember-me">记住我</label>
+                        <input id="remember-me" type="checkbox" name="rememberMe">
+                    </div>
+                </div>
+
+
+                <input class="btn btn-primary col-sm-3"
+                       type="submit" style="width: 50%;float: right"
+                       value="登 录"/>
             </form>
         </div>
     </div>
@@ -50,8 +80,29 @@
 <script src="WEB-RES/plugins/jquery-validation-1.14.0/localization/messages_zh.js"></script>
 <script src="WEB-RES/plugins/layer3/layer.js"></script>
 <script src="WEB-RES/plugins/bootstrap3/js/bootstrap.js"></script>
+<script src="WEB-RES/plugins/icheck/icheck.js"></script>
 <script>
     $(function () {
+
+        var $validateCodeImage = $("#validateCodeImage");
+        $validateCodeImage.tooltip({
+            title: '点击图片刷新验证码',
+            trigger: 'hover focus'
+        });
+        $validateCodeImage.click(function () {
+            console.log("刷新图片");
+            /*这个随机数只是为了让每次src的指向都不一样，避免浏览器一直读缓存而不刷新图片*/
+            this.src = '/auth/captcha' + "?" + Math.random();
+        });
+
+        $("#remember-me").iCheck({
+            checkboxClass: 'icheckbox_square-red',
+            radioClass: 'iradio_square-red',
+            ifClicked: function () {
+                alert("--")
+            }
+        });
+
         var message = $("#error_message").val();
         //长度大于0表示有错误信息
         if (message.length > 0) {

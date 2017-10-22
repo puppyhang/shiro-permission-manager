@@ -1,14 +1,17 @@
 package com.ternence.permission.controller;
 
+import com.octo.captcha.service.multitype.GenericManageableCaptchaService;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.ternence.permission.base.AbstractSystemController;
 import com.ternence.permission.dto.LoginParamBean;
+import com.ternence.permission.ex.CapatchaErrorException;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +19,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * create by 陶江航 at 2017/10/22 0:37
@@ -27,11 +35,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class AuthController extends AbstractSystemController {
+    @Autowired
+    private GenericManageableCaptchaService captchaService;
 
     @Override
     public String getLoggerName() {
 
         return getClass().getName();
+    }
+
+    @RequestMapping("/index")
+    public String index() {
+
+        return "index";
     }
 
     /**
@@ -48,6 +64,10 @@ public class AuthController extends AbstractSystemController {
      * 新时代的前后分离这就有问题了，页面不应该由后台返回，那么很多逻辑就需要前段自己掌控了
      * <p>
      * 这种方式适合web管理后台和页面不分开的登录逻辑
+     * <p>
+     * 还有登录失败返回的信息太少，需要自定义FormAuthenticationFilter实现获取更多的信息
+     * <p>
+     * 还有这个接口对扩展不友好，每次新增一个异常就要来这个做一个判断
      */
     @RequestMapping("/login")
     public String login(HttpServletRequest req, Model model) {
@@ -60,6 +80,10 @@ public class AuthController extends AbstractSystemController {
             authenticationError = "用户名/密码错误";
         } else if (AuthenticationException.class.getName().equals(errorClassName)) {
             authenticationError = "登陆失败";
+        } else if (ExcessiveAttemptsException.class.getName().equals(errorClassName)) {
+            authenticationError = "密码错误次数已达到五次,请明日再试";
+        } else if (CapatchaErrorException.class.getName().equals(errorClassName)) {
+            authenticationError = "验证码错误";
         }
         model.addAttribute("authenticationError", authenticationError);
         //这个日志表明这个方法的工作原理
@@ -108,6 +132,45 @@ public class AuthController extends AbstractSystemController {
         }
         //else 这个用户被shiro记住过了,并且验证通过，那么直接登录成功
         return renderingSuccessResponseData(null, "登录成功");
+    }
+
+
+    /**
+     * 生成验证码图片的接口
+     *
+     * @param httpServletRequest  请求对象
+     * @param httpServletResponse 响应对象
+     */
+    @RequestMapping(value = "/auth/captcha")
+    public void getCode(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+
+        byte[] captchaChallengeAsJpeg;
+        // 输出jpg的字节流
+        ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
+        try {
+            String captchaId = httpServletRequest.getSession().getId();
+            BufferedImage challenge = (BufferedImage) captchaService.getChallengeForID(captchaId,
+                    httpServletRequest.getLocale());
+            // a jpeg encoder
+            JPEGImageEncoder jpegEncoder = JPEGCodec.createJPEGEncoder(jpegOutputStream);
+            jpegEncoder.encode(challenge);
+            captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
+            // flush it in the response
+            httpServletResponse.setHeader("Cache-Control", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
+            httpServletResponse.setContentType("image/jpeg");
+            ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
+            responseOutputStream.write(captchaChallengeAsJpeg);
+            responseOutputStream.flush();
+            responseOutputStream.close();
+        } catch (Exception e) {
+            try {
+                httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+
     }
 
 }

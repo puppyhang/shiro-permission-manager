@@ -8,6 +8,8 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="loginUrl" value="/login"/>
         <property name="securityManager" ref="defaultSecurityManager"/>
+        <!--登陆成功就去首页-->
+        <property name="successUrl" value="/index"/>
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
         <property name="filters">
             <util:map>
@@ -25,18 +27,21 @@
                 /login=authc
                 <!--登出拦截器-->
                 /logout=logout
+                <!--验证码接口放行-->
+                /auth/captcha=anon
                 <!--记住把静态资源放行-->
                 /res/**=anon
                 /WEB-RES/**=anon
+                /favicon.ico=anon
                 <!--登录过后就可以访问系统的所有资源-->
                 /**=user
             </value>
         </property>
     </bean>
 
-    <!-- 基于Form表单的身份验证过滤器-->
+    <!-- 基于Form表单的身份验证过滤器,支持验证码的校验-->
     <bean id="formAuthenticationFilter"
-          class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+          class="com.ternence.permission.shiro.listener.CaptchaFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
@@ -45,29 +50,34 @@
 
     <bean id="defaultSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="controlRealm"/>
-        <property name="rememberMeManager" ref="invalidRememberMeSessionManager"/>
+        <property name="rememberMeManager" ref="cookieRememberMeManager"/>
     </bean>
 
-    <bean id="controlRealm" class="com.ternence.permission.realm.SecurityAccessControlRealm">
+    <bean id="controlRealm" class="com.ternence.permission.shiro.SecurityAccessControlRealm">
         <!--配置加密类型的密码的匹配器-->
-        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+        <property name="credentialsMatcher" ref="retryLimitHashedCredentialsMatcher"/>
     </bean>
 
-    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    <!--带有重试次数的hash凭证匹配器-->
+    <bean id="retryLimitHashedCredentialsMatcher"
+          class="com.ternence.permission.shiro.matcher.RetryLimitHashedCredentialsMatcher">
         <property name="hashAlgorithmName" value="MD5"/>
         <property name="hashIterations" value="2"/>
         <property name="storedCredentialsHexEncoded" value="true"/>
     </bean>
 
     <!--去除记住我的功能-->
-    <bean id="invalidRememberMeSessionManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
-        <property name="cookie" ref="rememberMeCookie"/>
+    <bean id="cookieRememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!--<property name="cookie" ref="rememberMeCookie"/>-->
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg value="rememberMe"/>
+        <!--cookie的名字-->
+        <property name="name" value="rememberMe"/>
+        <!--将cookie设置成HttpOnly是为了防止XSS攻击,窃取cookie内容-->
+        <!--通过js脚本将无法读取到cookie信息，这样能有效的防止XSS攻击-->
         <property name="httpOnly" value="true"/>
-        <!--关闭浏览器就失效-->
-        <property name="maxAge" value="-1"/>
+        <!--cookie生效一年-->
+        <property name="maxAge" value="31536000"/>
     </bean>
 </beans>
