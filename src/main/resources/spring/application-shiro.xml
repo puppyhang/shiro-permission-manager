@@ -6,7 +6,7 @@
     <description>spring整合shiro的配置文件</description>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="loginUrl" value="/login"/>
+        <property name="loginUrl" value="/login.jsp"/>
         <!--这个最好不用配置，登陆成功后会自动跳转到上一个请求的页面-->
         <property name="successUrl" value="/"/>
         <property name="securityManager" ref="defaultSecurityManager"/>
@@ -18,11 +18,15 @@
         <!--anon org.apache.shiro.web.filter.authc.AnonymousFilter-->
         <!--authc org.apache.shiro.web.filter.authc.FormAuthenticationFilter-->
         <!--user org.apache.shiro.web.filter.authc.UserFilter-->
+        <!--记住把静态资源放行-->
         <property name="filterChainDefinitions">
             <value>
                 /=authc
-                /login=anon
+                /login.jsp=anon
+                /auth/login=anon
                 /logout=logout
+                /res/**=anon
+                /WEB-RES/**=anon
                 /**=user
             </value>
         </property>
@@ -33,7 +37,8 @@
           class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
-        <property name="loginUrl" value="/login"/>
+        <property name="rememberMeParam" value="rememberMe"/>
+        <property name="loginUrl" value="/login.jsp"/>
     </bean>
 
     <bean id="defaultSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -41,8 +46,16 @@
         <property name="rememberMeManager" ref="invalidRememberMeSessionManager"/>
     </bean>
 
-    <bean id="controlRealm" class="com.ternence.permission.realm.SecurityAccessControlRealm"/>
+    <bean id="controlRealm" class="com.ternence.permission.realm.SecurityAccessControlRealm">
+        <!--配置加密类型的密码的匹配器-->
+        <property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>
+    </bean>
 
+    <bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="MD5"/>
+        <property name="hashIterations" value="2"/>
+        <property name="storedCredentialsHexEncoded" value="true"/>
+    </bean>
 
     <!--去除记住我的功能-->
     <bean id="invalidRememberMeSessionManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">

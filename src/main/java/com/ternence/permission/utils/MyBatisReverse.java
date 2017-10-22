@@ -1,13 +1,11 @@
-package com.ternence.mybatis.reverse;
+package com.ternence.permission.utils;
 
-import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.internal.NullProgressCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,20 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * create by 陶江航 at 2017/10/21 23:25
+ * create by 陶江航 at 2017/10/21 23:46
  *
  * @version 1.0
  * @email taojianghang@xinzhentech.com
- * @description MyBatis的逆向工程的代码生成器
+ * @description mybatis的逆向工程
  */
-public class MyBatisGeneratorTest {
+public class MyBatisReverse {
+    private static final String path =
+            "D:/Work-Files/shiro-permission-manager/src/main/resources/mybatis-generate-config.xml";
 
-    @Test
-    public void generator() throws IOException, XMLParserException,
+    public static void main(String[] args) throws IOException, XMLParserException,
             InvalidConfigurationException, SQLException, InterruptedException {
         List<String> warnings = new ArrayList<>();
         //项目根路径不要有中文,我的有中文,所以使用绝对路径
-        File configFile = new File("D:\\Work-Files\\shiro-permission-manager\\src\\test\\resources\\mybatis-generate-config.xml");
+        File configFile = new File(path);
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(true);
