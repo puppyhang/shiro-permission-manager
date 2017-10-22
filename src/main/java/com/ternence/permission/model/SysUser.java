@@ -10,6 +10,8 @@ public class SysUser implements Serializable {
 
     private String pwd;
 
+    private String salt;
+
     private String realName;
 
     private String empNo;
@@ -56,6 +58,14 @@ public class SysUser implements Serializable {
 
     public void setPwd(String pwd) {
         this.pwd = pwd == null ? null : pwd.trim();
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
     }
 
     public String getRealName() {
@@ -155,6 +165,7 @@ public class SysUser implements Serializable {
         sb.append(", uuid=").append(uuid);
         sb.append(", loginName=").append(loginName);
         sb.append(", pwd=").append(pwd);
+        sb.append(", salt=").append(salt);
         sb.append(", realName=").append(realName);
         sb.append(", empNo=").append(empNo);
         sb.append(", orgId=").append(orgId);
@@ -185,6 +196,7 @@ public class SysUser implements Serializable {
         return (this.getUuid() == null ? other.getUuid() == null : this.getUuid().equals(other.getUuid()))
             && (this.getLoginName() == null ? other.getLoginName() == null : this.getLoginName().equals(other.getLoginName()))
             && (this.getPwd() == null ? other.getPwd() == null : this.getPwd().equals(other.getPwd()))
+            && (this.getSalt() == null ? other.getSalt() == null : this.getSalt().equals(other.getSalt()))
             && (this.getRealName() == null ? other.getRealName() == null : this.getRealName().equals(other.getRealName()))
             && (this.getEmpNo() == null ? other.getEmpNo() == null : this.getEmpNo().equals(other.getEmpNo()))
             && (this.getOrgId() == null ? other.getOrgId() == null : this.getOrgId().equals(other.getOrgId()))
@@ -205,6 +217,7 @@ public class SysUser implements Serializable {
         result = prime * result + ((getUuid() == null) ? 0 : getUuid().hashCode());
         result = prime * result + ((getLoginName() == null) ? 0 : getLoginName().hashCode());
         result = prime * result + ((getPwd() == null) ? 0 : getPwd().hashCode());
+        result = prime * result + ((getSalt() == null) ? 0 : getSalt().hashCode());
         result = prime * result + ((getRealName() == null) ? 0 : getRealName().hashCode());
         result = prime * result + ((getEmpNo() == null) ? 0 : getEmpNo().hashCode());
         result = prime * result + ((getOrgId() == null) ? 0 : getOrgId().hashCode());

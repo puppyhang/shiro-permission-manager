@@ -1,5 +1,7 @@
 package com.ternence.permission.service;
 
+import com.ternence.permission.model.SysUser;
+
 /**
  * create by 陶江航 at 2017/10/21 22:23
  *
@@ -7,6 +9,8 @@ package com.ternence.permission.service;
  * @email taojianghang@xinzhentech.com
  * @description 用户对应的Service
  */
-public interface UserService {
+public interface SysUserService {
+
+    SysUser findUserByAccountName(String name);
 
 }

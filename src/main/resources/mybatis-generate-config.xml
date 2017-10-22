@@ -56,10 +56,10 @@
         <!-- !!!! Table Configurations !!!! -->
         <!--一下这几个配置就不会生成 UserExample类了-->
         <table tableName="sys_user"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false"/>
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
     </context>
 </generatorConfiguration>

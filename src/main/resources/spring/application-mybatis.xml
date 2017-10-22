@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <description>spring 整合 mybatis的配置文件</description>
+    <description>spring 整合 mybatis的配置文件,这个扫描mapper对象</description>
 
     <context:property-placeholder location="classpath:server.properties"/>
 
@@ -50,6 +50,8 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
 
         <property name="basePackage" value="com.ternence.permission"/>
+
+        <property name="annotationClass" value="com.ternence.permission.anon.MyBatisMapper"/>
     </bean>
 
     <!--TODO 事务的配置-->

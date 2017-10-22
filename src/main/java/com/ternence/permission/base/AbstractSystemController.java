@@ -4,6 +4,11 @@ import com.google.common.base.Preconditions;
 import com.ternence.permission.dto.ResultDataBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * create by 陶江航 at 2017/10/21 21:56
@@ -12,6 +17,7 @@ import org.slf4j.LoggerFactory;
  * @email taojianghang@xinzhentech.com
  * @description 对controller的系统级别的抽象, 定义统一的异常处理，渲染不通类型的响应数据等等
  */
+@ControllerAdvice
 public abstract class AbstractSystemController implements Controller {
     //一个controller所有线程共享一个logger
     private Logger logger = null;
@@ -30,6 +36,15 @@ public abstract class AbstractSystemController implements Controller {
     public Logger getLogger() {
 
         return logger;
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({Throwable.class})
+    public Object exceptionHandler(Exception e) {
+        getLogger().info("发生异常:", e);
+        //返回异常信息就行了
+        return renderingFailureResponseData(e.getMessage());
     }
 
     @Override
