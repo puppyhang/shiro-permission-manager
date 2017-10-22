@@ -17,6 +17,14 @@
     </properties>
 
     <dependencies>
+        <!--测试相关依赖-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--json相关依赖-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -80,12 +88,7 @@
             <artifactId>log4j-over-slf4j</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
+        <!--安全相关-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
@@ -107,6 +110,11 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>javax.servlet.jsp-api</artifactId>
+            <version>2.3.0</version>
         </dependency>
 
         <!--持久层相关的依赖-->
@@ -186,6 +194,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>

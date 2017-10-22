@@ -6,27 +6,29 @@
     <description>spring整合shiro的配置文件</description>
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="loginUrl" value="/login.jsp"/>
-        <!--这个最好不用配置，登陆成功后会自动跳转到上一个请求的页面-->
-        <property name="successUrl" value="/"/>
+        <property name="loginUrl" value="/login"/>
         <property name="securityManager" ref="defaultSecurityManager"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
         <property name="filters">
             <util:map>
+                <!--配置authc这个拦截器的实现类为FormAuthenticationFilter-->
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
             </util:map>
         </property>
         <!--anon org.apache.shiro.web.filter.authc.AnonymousFilter-->
         <!--authc org.apache.shiro.web.filter.authc.FormAuthenticationFilter-->
         <!--user org.apache.shiro.web.filter.authc.UserFilter-->
-        <!--记住把静态资源放行-->
+        <!--logout org.apache.shiro.web.filter.authc.LogoutFilter-->
         <property name="filterChainDefinitions">
             <value>
-                /=authc
-                /login.jsp=anon
-                /auth/login=anon
+                <!--把登录URL的拦截器设置为authc,则FormAuthenticationFilter会拦截登录请求，然后进行登录的逻辑-->
+                /login=authc
+                <!--登出拦截器-->
                 /logout=logout
+                <!--记住把静态资源放行-->
                 /res/**=anon
                 /WEB-RES/**=anon
+                <!--登录过后就可以访问系统的所有资源-->
                 /**=user
             </value>
         </property>
