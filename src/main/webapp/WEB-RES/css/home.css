@@ -1,0 +1,7 @@
+/*home页面的样式*/
+#logout {
+    float: right;
+    line-height: 50px;
+    margin: 0 20px;
+    font-weight: bold
+}

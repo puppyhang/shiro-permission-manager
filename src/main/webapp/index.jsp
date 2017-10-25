@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Shiro权限管理系统</title>
+    <title>跳转中</title>
 </head>
 <body>
-<a href="/logout">退出登录</a>
+<jsp:forward page="/index"/>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.ternence.permission.controller;
 
 import com.ternence.permission.base.AbstractSystemController;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,9 +17,11 @@ public class UserRoleManageController extends AbstractSystemController {
 
     @Override
     public String getLoggerName() {
+
         return getClass().toString();
     }
 
+    @RequiresPermissions("system:")
     @RequestMapping("/user/add")
     public Object requestAddUser() {
         getLogger().info("请求新增一个用户");

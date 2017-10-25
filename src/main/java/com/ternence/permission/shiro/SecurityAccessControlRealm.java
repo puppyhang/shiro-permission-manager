@@ -1,8 +1,7 @@
-package com.ternence.permission.realm;
+package com.ternence.permission.shiro;
 
 import com.ternence.permission.model.SysUser;
 import com.ternence.permission.service.SysUserService;
-import com.ternence.permission.utils.ShiroPasswordEncryptUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

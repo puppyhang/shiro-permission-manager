@@ -14,6 +14,7 @@
         <!--maven插件中使用-->
         <java.version>1.8</java.version>
         <spring.version>4.3.10.RELEASE</spring.version>
+        <jcaptcha.version>1.0</jcaptcha.version>
     </properties>
 
     <dependencies>
@@ -24,7 +25,31 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!--验证码相关配置-->
+        <!-- 验证码生成组件 -->
+        <dependency>
+            <groupId>com.octo.captcha</groupId>
+            <artifactId>jcaptcha</artifactId>
+            <version>${jcaptcha.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.octo.captcha</groupId>
+            <artifactId>jcaptcha-api</artifactId>
+            <version>${jcaptcha.version}</version>
+        </dependency>
 
+        <!--缓存相关配置-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.11</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--json相关依赖-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -93,6 +118,17 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>1.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.4.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
