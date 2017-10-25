@@ -28,6 +28,15 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="user user-menu">
+                        <a href="/logout">退 出</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
 
