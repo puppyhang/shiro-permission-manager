@@ -11,7 +11,6 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,11 +43,6 @@ public class AuthController extends AbstractSystemController {
         return getClass().getName();
     }
 
-    @RequestMapping("/index")
-    public String index() {
-
-        return "index";
-    }
 
     /**
      * @param req 请求对象，shiro会把登录信息放在请求对象中发送过来

@@ -6,8 +6,10 @@
     <bean id="captchaService"
           class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
         <constructor-arg index="0" ref="captchaEngine"/>
-        <constructor-arg index="1" value="300"/><!--超时时间 秒 -->
-        <constructor-arg index="2" value="20000"/><!--最大并发数 -->
+        <!--超时时间 秒 -->
+        <constructor-arg index="1" value="300"/>
+        <!--最大并发数 -->
+        <constructor-arg index="2" value="20000"/>
         <constructor-arg index="3" value="20000"/>
     </bean>
 

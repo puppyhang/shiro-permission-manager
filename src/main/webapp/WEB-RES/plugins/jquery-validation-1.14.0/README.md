@@ -37,7 +37,7 @@ Include jQuery and the plugin on a page. Then select a form to validate and call
 <form>
 	<input required>
 </form>
-<script src="jquery.js"></script>
+<script src="jquery-3.2.1.js"></script>
 <script src="jquery.validate.js"></script>
 <script>
 $("form").validate();

@@ -9,7 +9,7 @@
         <property name="loginUrl" value="/login"/>
         <property name="securityManager" ref="defaultSecurityManager"/>
         <!--登陆成功就去首页-->
-        <property name="successUrl" value="/index"/>
+        <!--<property name="successUrl" value="/index"/>-->
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
         <property name="filters">
             <util:map>
@@ -46,6 +46,7 @@
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
         <property name="loginUrl" value="/login.jsp"/>
+        <!--<property name="successUrl" value="/index"/>-->
     </bean>
 
     <bean id="defaultSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

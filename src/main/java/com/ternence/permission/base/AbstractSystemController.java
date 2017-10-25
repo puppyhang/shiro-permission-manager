@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @description 对controller的系统级别的抽象, 定义统一的异常处理，渲染不通类型的响应数据等等
  */
 @ControllerAdvice
-public abstract class AbstractSystemController implements Controller {
+public abstract class AbstractSystemController implements RestfulController {
     //一个controller所有线程共享一个logger
     private Logger logger = null;
 
@@ -32,7 +32,17 @@ public abstract class AbstractSystemController implements Controller {
         }
     }
 
-    @Override
+    /**
+     * 设置日志打引器的名称
+     *
+     * @return 用户设置的名称
+     */
+    abstract public String getLoggerName();
+
+    /**
+     * @return 根据用户设置的loggerName返回一个日志打引器
+     * @see #getLoggerName()
+     */
     public Logger getLogger() {
 
         return logger;
