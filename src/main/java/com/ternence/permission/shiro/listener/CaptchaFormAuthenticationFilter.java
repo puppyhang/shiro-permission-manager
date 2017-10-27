@@ -1,12 +1,10 @@
 package com.ternence.permission.shiro.listener;
 
 import com.octo.captcha.service.multitype.GenericManageableCaptchaService;
-import com.ternence.permission.ex.CapatchaErrorException;
-import com.ternence.permission.shiro.captcha.CaptchaEngine;
+import com.ternence.permission.ex.CaptchaErrorException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -50,12 +48,12 @@ public class CaptchaFormAuthenticationFilter extends FormAuthenticationFilter {
             } else {
                 // 验证码错误
                 request.setAttribute("shiroLoginFailure",
-                        CapatchaErrorException.class.getCanonicalName());
+                        CaptchaErrorException.class.getCanonicalName());
             }
         } else {
             // 验证码为null
             request.setAttribute("shiroLoginFailure",
-                    CapatchaErrorException.class.getCanonicalName());
+                    CaptchaErrorException.class.getCanonicalName());
         }
         // 返回true表明已经处理登陆逻辑
         return true;

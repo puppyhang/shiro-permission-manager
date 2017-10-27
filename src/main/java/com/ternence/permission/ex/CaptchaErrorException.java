@@ -7,11 +7,11 @@ package com.ternence.permission.ex;
  * @email taojianghang@xinzhentech.com
  * @description 验证码错误异常
  */
-public class CapatchaErrorException extends Exception {
-    public CapatchaErrorException() {
+public class CaptchaErrorException extends Exception {
+    public CaptchaErrorException() {
     }
 
-    public CapatchaErrorException(String message) {
+    public CaptchaErrorException(String message) {
         super(message);
     }
 }
