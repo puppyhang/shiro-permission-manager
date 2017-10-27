@@ -5,7 +5,7 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.ternence.permission.base.AbstractSystemController;
 import com.ternence.permission.dto.LoginParamBean;
-import com.ternence.permission.ex.CapatchaErrorException;
+import com.ternence.permission.ex.CaptchaErrorException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -76,7 +76,7 @@ public class AuthController extends AbstractSystemController {
             authenticationError = "登陆失败";
         } else if (ExcessiveAttemptsException.class.getName().equals(errorClassName)) {
             authenticationError = "密码错误次数已达到五次,请明日再试";
-        } else if (CapatchaErrorException.class.getName().equals(errorClassName)) {
+        } else if (CaptchaErrorException.class.getName().equals(errorClassName)) {
             authenticationError = "验证码错误";
         }
         model.addAttribute("authenticationError", authenticationError);

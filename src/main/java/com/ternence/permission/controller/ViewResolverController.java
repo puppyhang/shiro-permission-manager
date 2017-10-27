@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @version 1.0
  * @email taojianghang@xinzhentech.com
- *
- * @description 负责返回页面的Controller
+ * @description 视图解析的Controller，负责返回页面的Controller
  */
 @Controller
-public class PagesController extends AbstractSystemController {
+public class ViewResolverController extends AbstractSystemController {
     @Override
     public String getLoggerName() {
 

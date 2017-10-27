@@ -21,7 +21,12 @@ public class UserRoleManageController extends AbstractSystemController {
         return getClass().toString();
     }
 
-    @RequiresPermissions("system:")
+    /**
+     * 请求新增一个用户的接口
+     *
+     * @return 是否新增成功
+     */
+    @RequiresPermissions("system:user:add")
     @RequestMapping("/user/add")
     public Object requestAddUser() {
         getLogger().info("请求新增一个用户");
