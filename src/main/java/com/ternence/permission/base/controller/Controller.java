@@ -1,4 +1,4 @@
-package com.ternence.permission.base;
+package com.ternence.permission.base.controller;
 
 /**
  * create by 陶江航 at 2017/10/21 21:16

@@ -1,4 +1,4 @@
-package com.ternence.permission.listener;
+package com.ternence.permission.log;
 
 /**
  * create by 陶江航 at 2017/10/21 21:06

@@ -7,7 +7,7 @@
                debug="false">
 
     <!--设置启动监听-->
-    <contextListener class="com.ternence.permission.listener.LogbackStartupListener"/>
+    <contextListener class="com.ternence.permission.log.LogbackStartupListener"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">

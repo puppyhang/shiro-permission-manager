@@ -1,6 +1,6 @@
 package com.ternence.permission.controller;
 
-import com.ternence.permission.base.AbstractSystemController;
+import com.ternence.permission.base.controller.AbstractSystemController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ViewResolverController extends AbstractSystemController {
     @Override
-    public String getLoggerName() {
+    public Class getLoggerName() {
 
-        return getClass().getName();
+        return getClass();
     }
 
 

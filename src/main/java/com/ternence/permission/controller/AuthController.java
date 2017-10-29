@@ -3,12 +3,11 @@ package com.ternence.permission.controller;
 import com.octo.captcha.service.multitype.GenericManageableCaptchaService;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import com.ternence.permission.base.AbstractSystemController;
+import com.ternence.permission.base.controller.AbstractSystemController;
 import com.ternence.permission.dto.LoginParamBean;
 import com.ternence.permission.ex.CaptchaErrorException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +38,9 @@ public class AuthController extends AbstractSystemController {
     private GenericManageableCaptchaService captchaService;
 
     @Override
-    public String getLoggerName() {
+    public Class getLoggerName() {
 
-        return getClass().getName();
+        return getClass();
     }
 
 
