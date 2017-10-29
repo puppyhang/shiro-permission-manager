@@ -1167,7 +1167,7 @@ jQuery.extend({
 
 	Deferred: function( func ) {
 		var tuples = [
-				// action, add listener, listener list, final state
+				// action, add filter, filter list, final state
 				[ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ],
 				[ "reject", "fail", jQuery.Callbacks("once memory"), "rejected" ],
 				[ "notify", "progress", jQuery.Callbacks("memory") ]
@@ -3458,7 +3458,7 @@ if ( !jQuery.support.submitBubbles ) {
 					jQuery._data( form, "submitBubbles", true );
 				}
 			});
-			// return undefined since we don't need an event listener
+			// return undefined since we don't need an event filter
 		},
 
 		postDispatch: function( event ) {

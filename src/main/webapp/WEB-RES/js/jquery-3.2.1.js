@@ -3511,7 +3511,7 @@ jQuery.extend( {
 	Deferred: function( func ) {
 		var tuples = [
 
-				// action, add listener, callbacks,
+				// action, add filter, callbacks,
 				// ... .then handlers, argument index, [final state]
 				[ "notify", "progress", jQuery.Callbacks( "memory" ),
 					jQuery.Callbacks( "memory" ), 2 ],

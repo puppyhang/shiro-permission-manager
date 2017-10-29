@@ -108,7 +108,7 @@ $(function () {
     if (tmp && $.inArray(tmp, mySkins))
       changeSkin(tmp)
 
-    // Add the change skin listener
+    // Add the change skin filter
     $('[data-skin]').on('click', function (e) {
       if ($(this).hasClass('knob'))
         return

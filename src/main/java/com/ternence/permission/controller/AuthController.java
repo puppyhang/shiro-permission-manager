@@ -8,6 +8,7 @@ import com.ternence.permission.dto.LoginParamBean;
 import com.ternence.permission.ex.CaptchaErrorException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,13 @@ public class AuthController extends AbstractSystemController {
      */
     @RequestMapping("/login")
     public String login(HttpServletRequest req, Model model) {
+        //判断是否登录,这里获取Subject永远不会为null的，如果为null内部会新建一个Subject绑定到当前线程
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            getLogger().info("这个人{}已经登录过了,直接跳转到主页面", subject);
+            //如果他已经登录了就直接重定向到主页
+            return "redirect:/";
+        }
         String errorClassName = (String) req.getAttribute("shiroLoginFailure");
         getLogger().info("errorClassName:{}", errorClassName);
         String authenticationError = null;
@@ -82,6 +90,7 @@ public class AuthController extends AbstractSystemController {
         model.addAttribute("authenticationError", authenticationError);
         //这个日志表明这个方法的工作原理
         getLogger().info(authenticationError == null ? "请求登录" : "登录失败,原因是" + authenticationError);
+        //返回登录页面
         return "login";
     }
 
@@ -166,5 +175,4 @@ public class AuthController extends AbstractSystemController {
         }
 
     }
-
 }
