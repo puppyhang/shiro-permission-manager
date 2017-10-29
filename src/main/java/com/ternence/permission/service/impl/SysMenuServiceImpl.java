@@ -24,6 +24,14 @@ public class SysMenuServiceImpl extends LogableComponent implements SysMenuServi
         return getClass();
     }
 
+    /**
+     * 1:根据用户id查询到用户的角色信息
+     * 2:根据角色查询到对应的权限列表
+     * 3:根据权限查询到对应的菜单并去重就得到了用户的菜单
+     *
+     * @param sysUser 用户信息
+     * @return 菜单集合
+     */
     @Override
     public List<SysMenu> getSysMenuByUser(SysUser sysUser) {
 

@@ -66,8 +66,8 @@
                     <a href="#">
                         <i class="fa fa-link"></i>
                         <span>系统管理</span>
-                        <%--加上style="margin: 0"去除箭头被意外加上的margin -7px--%>
-                        <span class="pull-right-container" style="margin: 0">
+                        <%--我觉得一下这种样式挺好的--%>
+                        <span class="pull-right-container fa fa-angle-left pull-right">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
