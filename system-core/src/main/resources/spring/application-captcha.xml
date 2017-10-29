@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 验证码生成器 -->
+    <bean id="captchaService"
+          class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
+        <constructor-arg index="0" ref="captchaEngine"/>
+        <!--超时时间 秒 -->
+        <constructor-arg index="1" value="300"/>
+        <!--最大并发数 -->
+        <constructor-arg index="2" value="20000"/>
+        <constructor-arg index="3" value="20000"/>
+    </bean>
+
+    <!-- 验证码初始化引擎 -->
+    <bean id="captchaEngine"
+          class="com.ternence.permission.shiro.captcha.CaptchaEngine">
+    </bean>
+</beans>
