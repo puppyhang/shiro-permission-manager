@@ -10,6 +10,8 @@
     <%--<link rel="stylesheet" href="../../WEB-RES/plugins/adminlte/css/ionicons.css">--%>
     <link type="text/css" rel="stylesheet" href="/WEB-RES/plugins/adminlte/css/AdminLTE.css">
     <link type="text/css" rel="stylesheet" href="/WEB-RES/plugins/adminlte/css/skins/skin-blue.css">
+    <link rel="stylesheet" type="text/css"
+          href="../../WEB-RES/plugins/bootstrap-closable-tabs/bootstrap.addtabs.css"/>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -40,7 +42,7 @@
         </nav>
     </header>
 
-    <!-- Left side column. contains the logo and sidebar -->
+    <!-- 左边部分,包含头像和菜单 -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
@@ -82,34 +84,28 @@
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- 内容包裹器，这里包含所有的内容页面 -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Page Header
-                <small>Optional description</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
-            </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content container-fluid">
-
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
-
-        </section>
-        <!-- /.content -->
+        <!-- 放置所有的tabs -->
+        <ul class="nav nav-tabs" id="tabs1" role="tablist">
+            <li class="active" role="presentation">
+                <a aria-controls="dashboard" data-toggle="tab" href="#dashboard" role="tab">
+                    Dashboard
+                </a>
+            </li>
+        </ul>
+        <!-- 放置tab对应内容 -->
+        <div class="tab-content content">
+            <div class="tab-pane active" id="dashboard" role="tabpanel">
+                Dashboard.
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="../../WEB-RES/js/jquery-1.9.1.js"></script>
 <script src="../../WEB-RES/plugins/bootstrap3/js/bootstrap.js"></script>
 <script src="../../WEB-RES/plugins/adminlte/js/adminlte.min.js"></script>
+<script src="../../WEB-RES/plugins/bootstrap-closable-tabs/bootstrap.addtabs.js"></script>
 </body>
 </html>

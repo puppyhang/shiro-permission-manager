@@ -41,7 +41,7 @@
 
     <!-- 基于Form表单的身份验证过滤器,支持验证码的校验-->
     <bean id="formAuthenticationFilter"
-          class="com.ternence.permission.shiro.listener.CaptchaFormAuthenticationFilter">
+          class="com.ternence.permission.shiro.filter.CaptchaFormAuthenticationFilter">
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
@@ -52,7 +52,15 @@
     <bean id="defaultSecurityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="controlRealm"/>
         <property name="rememberMeManager" ref="cookieRememberMeManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
     </bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionListeners" ref="applicationSessionListener"/>
+    </bean>
+
+    <!--session生命周期的监听-->
+    <bean id="applicationSessionListener" class="com.ternence.permission.shiro.listener.ApplicationSessionListener"/>
 
     <bean id="controlRealm" class="com.ternence.permission.shiro.SecurityAccessControlRealm">
         <!--配置加密类型的密码的匹配器-->

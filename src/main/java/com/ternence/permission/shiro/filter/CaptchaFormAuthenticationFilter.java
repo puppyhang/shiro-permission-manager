@@ -1,4 +1,4 @@
-package com.ternence.permission.shiro.listener;
+package com.ternence.permission.shiro.filter;
 
 import com.octo.captcha.service.multitype.GenericManageableCaptchaService;
 import com.ternence.permission.ex.CaptchaErrorException;

@@ -39,6 +39,7 @@ public class SecurityAccessControlRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        //获取用户的权限信息的方法,将用户的权限信息从这里返回,shiro才能判断是否这个用户具有权限
         return null;
     }
 
@@ -54,20 +55,23 @@ public class SecurityAccessControlRealm extends AuthorizingRealm {
      * shiro的HashedCredentialsMatcher在比较密码的时候，
      * 它使用的加密方式是直接返回一个SimpleHash，相当于调用toString方法，
      * 而不是调用toHex方法，所以我们在生成hash的密码的时候也需要是使用toString方法
+     * <p>
+     * 为了个更加的可复用，查询用户菜单的功能需要做成一个单独的接口，方便整合的时候查询菜单
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
         SysUser sysUser = userService.findUserByAccountName(username);
         if (sysUser == null) {
+            //这样跟容易找到问题的所有,而不是直接返回null
             throw new UnknownAccountException("没有该用户存在");
         }
+        //查询菜单信息
+        //1:根据用户id查询到用户的角色信息
+        //2:根据角色查询到对应的权限列表
+        //3:根据权限查询到对应的菜单并去重就得到了用户的菜单
         ByteSource salt = ByteSource.Util.bytes(sysUser.getSalt());
-
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(sysUser.getLoginName(),
+        return new SimpleAuthenticationInfo(sysUser.getLoginName(),
                 sysUser.getPwd(), salt, getName());
-        logger.info("原始盐为:{}", ByteSource.Util.bytes("99ff91cbb4e928ef1696593c10d184fe"));
-        logger.info("认证盐为:{}", salt);
-        return authenticationInfo;
     }
 }
