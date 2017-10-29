@@ -1,4 +1,4 @@
-package com.ternence.permission.base;
+package com.ternence.permission.base.controller;
 
 import com.ternence.permission.dto.ResultDataBean;
 

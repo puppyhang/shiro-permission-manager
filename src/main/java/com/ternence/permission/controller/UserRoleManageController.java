@@ -1,6 +1,6 @@
 package com.ternence.permission.controller;
 
-import com.ternence.permission.base.AbstractSystemController;
+import com.ternence.permission.base.controller.AbstractSystemController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserRoleManageController extends AbstractSystemController {
 
     @Override
-    public String getLoggerName() {
+    public Class getLoggerName() {
 
-        return getClass().toString();
+        return getClass();
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.ternence.permission.listener;
+package com.ternence.permission.log;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
