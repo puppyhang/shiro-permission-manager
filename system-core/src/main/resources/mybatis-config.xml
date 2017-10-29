@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 二级缓存，false，多表操作时，由于namespace，启用二级缓存会存在很大的风险 -->
+        <setting name="cacheEnabled" value="false"/>
+        <!--设置一个时限，以决定让驱动器等待数据库回应的多长时间为超时-->
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!-- 启用驼峰命名 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 使用jdbc生成自增的主键 -->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!--日志实现使用silf4j-->
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+    <!-- Continue going here -->
+
+</configuration>

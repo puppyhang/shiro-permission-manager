@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="es">
+
+    <diskStore path="java.io.tmpdir"/>
+    <!--
+    timeToLiveSeconds=x：缓存自创建日期起至失效时的间隔时间x；
+    timeToIdleSeconds=y：缓存创建以后，最后一次访问缓存的日期至失效之时的时间间隔y；
+    -->
+    <!--
+    case 1:只有timeToIdleSeconds，没有timeToLiveSeconds，那么按照timeToIdleSeconds的规矩来
+
+    case 2:如果既有timeToLiveSeconds 也有 timeToIdleSeconds 那么取最小数算作间隔时间；min(x,y);
+
+    实际情况需要多测试
+    -->
+    <!-- 登录记录缓存 锁定24小时 -->
+    <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="86400"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+</ehcache>

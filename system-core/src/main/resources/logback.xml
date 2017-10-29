@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--这个文件实在不行就让FreeMarker来动态生成好了-->
+<configuration xmlns="http://ch.qos.logback/xml/ns/logback"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback
+               http://ch.qos.logback/xml/ns/logback/logback.xsd"
+               debug="false">
+
+    <!--设置启动监听-->
+    <contextListener class="com.ternence.permission.log.LogbackStartupListener"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH-mm-ss} [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d[yyyy-MM-dd HH-mm-ss] [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <file>${LOG_FILE_PATH}\\debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <minIndex>1</minIndex>
+            <maxIndex>100</maxIndex>
+            <totalSizeCap>20GB</totalSizeCap>
+            <maxHistory>30</maxHistory>
+            <!--压缩出来的文件的名字-->
+            <fileNamePattern>${LOG_FILE_PATH}\\debug.%i.log.zip</fileNamePattern>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <!--单个文件达到10M以后出发压缩操作-->
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+
+    </appender>
+
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
